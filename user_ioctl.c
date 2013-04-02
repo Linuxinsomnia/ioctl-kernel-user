@@ -3,9 +3,6 @@
 #include "ioctl.h"
 
 
-#define IOCTL_WRITE_REG _IOW(MAJOR_NUM, 1, int *)
-
-
 retType read_from_register(int read_fd)
 {
     int retval;
