@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <errno.h>
+
+
+#define IOCTL_WRITE_REG _IOW(MAJOR_NUM, 1, int *)
+
+
+void read_from_register(int read_fd)
+{
+    int retval;
+    unsigned int read;
+
+    retval = ioctl(read_fd, IOCTL_READ_REG, &read);
+    if(retval < 0)
+    {
+        printf("fd: %d, read error: %d\n", read_fd, errno);
+        exit(-1);
+    }
+}
+
+void write_to_device(int write_fd)
+{
+    int retval;
+    unsigned int to_write = 1;
+
+    retval = ioctl(write_fd, IOCTL_WRITE_REG, &to_write);
+    if(retval < 0)
+    {
+        printf("fd: %d, write error: %d\n", write_fd, errno);
+        exit(-1);
+    }
+}
+
+main()
+{
+    int fd;
+    fd=open(ARM_NODE, 0776);
+    if(fd < 0)
+    {
+      perror("open");
+    }
+    while(1)
+    {
+        PRINT("Enter 1: To read from the register\nEnter 2: To write to the register\nEnter 3: Exit from menu\n");
+        PRINT("Provide choice: ");
+        SCAN("%d", data);
+    
+        switch(data)
+        {
+            case 1:
+                  if(!(ret = read_from_register(fd))
+                  {
+                      PRINT("read_from_register\n");
+                      break;
+                  }
+                  break;
+
+            case 2:
+                  if(!(ret = write_to_register(fd))
+                  {
+                      PRINT("write_to_register\n");
+                      break;
+                  }
+                  break;
+
+            case 3:
+                  exit(0);
+
+            default:
+                  PRINT("Provide proper input\n");
+        }
+    }
+}
