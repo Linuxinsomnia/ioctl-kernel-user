@@ -1,5 +1,7 @@
 ioctl-kernel-user
 =================
+Program is not complete (On process)!!
+--------------------------
 This documet is for Begining level ioctl interaction.
 Implemented for Kernel space with a arbitrary Magic number.
 
