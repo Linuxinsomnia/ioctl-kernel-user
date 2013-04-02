@@ -1,27 +1,33 @@
 #include <stdio.h>
 #include <errno.h>
+#include "ioctl.h"
 
 
 #define IOCTL_WRITE_REG _IOW(MAJOR_NUM, 1, int *)
 
 
-void read_from_register(int read_fd)
+retType read_from_register(int read_fd)
 {
     int retval;
     unsigned int read;
 
+    retval = NOT_OK;
     retval = ioctl(read_fd, IOCTL_READ_REG, &read);
     if(retval < 0)
     {
         printf("fd: %d, read error: %d\n", read_fd, errno);
         exit(-1);
     }
+    return retval;
 }
 
-void write_to_device(int write_fd)
+retType write_to_device(int write_fd)
 {
     int retval;
-    unsigned int to_write = 1;
+    unsigned int to_write;
+    
+    retval = NOT_OK;
+    to_write = 1;
 
     retval = ioctl(write_fd, IOCTL_WRITE_REG, &to_write);
     if(retval < 0)
@@ -29,11 +35,14 @@ void write_to_device(int write_fd)
         printf("fd: %d, write error: %d\n", write_fd, errno);
         exit(-1);
     }
+    return retval;
 }
 
 main()
 {
-    int fd;
+    int fd, ret;
+    
+    ret = NOT_OK;
     fd=open(ARM_NODE, 0776);
     if(fd < 0)
     {
