@@ -56,7 +56,7 @@ main()
             case 1:
                   if(!(ret = read_from_register(fd))
                   {
-                      PRINT("read_from_register\n");
+                      perror("read_from_register\n");
                       break;
                   }
                   break;
@@ -64,7 +64,7 @@ main()
             case 2:
                   if(!(ret = write_to_register(fd))
                   {
-                      PRINT("write_to_register\n");
+                      perror("write_to_register\n");
                       break;
                   }
                   break;
